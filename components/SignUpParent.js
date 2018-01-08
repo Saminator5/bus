@@ -15,7 +15,8 @@ export default class SignUpName extends React.Component {
     super(props);
     this.state = {
       phoneNumber: '',
-      isModalVisible: false
+      isModalVisible: false,
+      busNumber: ''
     }
   }
 
@@ -29,11 +30,6 @@ export default class SignUpName extends React.Component {
             <View style={{alignSelf: 'center', alignItems: 'center', flexDirection: 'row'}}>
               <View>
                 <Thumbnail style={{width: width/2}} square source={{uri: 'https://rhsaroundthebend.com/wp-content/uploads/2017/05/school-bus.png'}} />
-              </View>
-              <View>
-                <Button onPress={this._toggleModal} iconLeft style={[styles.lightBlue, {alignSelf: 'center'}]}>
-                  <Icon name='person-add' style={{fontSize: 40, color: 'black'}}/>
-                </Button>
               </View>
             </View>
             <View>
@@ -62,11 +58,9 @@ export default class SignUpName extends React.Component {
                 </View>
               </Form>
             </View>
-
-
-            <Button iconRight style={[styles.grey, {alignSelf: 'center'}]}>
-              <Text>Complete</Text>
-              <Icon name='log-in' />
+            <Button onPress={this._toggleModal} iconLeft style={[styles.grey, {alignSelf: 'center'}]}>
+              <Icon name='person-add' style={{fontSize: 30}}/>
+              <Text>Add Child</Text>
             </Button>
           </View>
         </Content>
@@ -76,37 +70,40 @@ export default class SignUpName extends React.Component {
               <Icon name='trash' style={{color: 'red', fontSize: 30, marginRight:5}}/>
             </Button>
             <View style={{ flex: 1 }}>
-                <Form style={[{minHeight: 300, justifyContent: 'space-around'}]}>
-                  <View>
-                    <Item stackedLabel>
-                      <Label>Name</Label>
-                      <Input />
-                    </Item>
-                  </View>
-                  <View>
-                    <Item stackedLabel>
-                      <Label>Name of School</Label>
-                      <Input />
-                    </Item>
-                  </View>
-                  <View>
-                    <Item stackedLabel>
-                      <Label>Bus Number</Label>
-                      <Input
-                        value={this.state.phoneNumber}
-                        keyboardType="number-pad"
-                        onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                      />
-                    </Item>
-                  </View>
-                </Form>
-              </View>
-              <Button onPress={this._toggleModal} iconLeft style={[styles.grey, {alignSelf: 'center'}]}>
-                <Icon name='done-all' />
-                <Text>Finish</Text>
-              </Button>
+              <Form style={[{minHeight: 300, justifyContent: 'space-around'}]}>
+                <View>
+                  <Item stackedLabel>
+                    <Label>Name</Label>
+                    <Input />
+                  </Item>
+                </View>
+                <View>
+                  <Item stackedLabel>
+                    <Label>Name of School</Label>
+                    <Input />
+                  </Item>
+                </View>
+                <View>
+                  <Item stackedLabel>
+                    <Label>Bus Number</Label>
+                    <Input
+                      value={this.state.busNumber}
+                      keyboardType="number-pad"
+                      onChangeText={(busNumber) => this.setState({busNumber})}
+                    />
+                  </Item>
+                </View>
+              </Form>
+            </View>
+            <Button onPress={this._toggleModal} iconLeft style={[styles.grey, {alignSelf: 'center'}]}>
+              <Icon name='done-all' />
+              <Text>Submit</Text>
+            </Button>
           </Content>
         </Modal>
+        <Button full warning>
+          <Text style={{fontSize: 20}}>Finish</Text>
+        </Button>
       </Container>
     );
   }
