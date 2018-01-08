@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, TouchableOpacity, TextInput, Dimensions} from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Thumbnail } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Thumbnail, Icon } from 'native-base';
 import styles from '../styles.js';
 import PhonePad from './PhonePad';
 const {height, width} = Dimensions.get('window');
+import Modal from 'react-native-modal'
 
 export default class SignUpName extends React.Component {
   static navigationOptions = {
@@ -13,18 +14,26 @@ export default class SignUpName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      phoneNumber: ''
+      phoneNumber: '',
+      isModalVisible: false
     }
   }
+
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible })
 
   render() {
     return (
       <Container style={styles.lightBlue}>
         <Content>
           <View style={{marginTop: 50}}>
-            <View style={{alignItems: 'center'}}>
+            <View style={{alignSelf: 'center', alignItems: 'center', flexDirection: 'row'}}>
               <View>
                 <Thumbnail style={{width: width/2}} square source={{uri: 'https://rhsaroundthebend.com/wp-content/uploads/2017/05/school-bus.png'}} />
+              </View>
+              <View>
+                <Button onPress={this._toggleModal} iconLeft style={[styles.lightBlue, {alignSelf: 'center'}]}>
+                  <Icon name='person-add' style={{fontSize: 40, color: 'black'}}/>
+                </Button>
               </View>
             </View>
             <View>
@@ -53,23 +62,52 @@ export default class SignUpName extends React.Component {
                 </View>
               </Form>
             </View>
-            <Button rounded style={[styles.grey, styles.button, {alignSelf: 'center', width: 70}]}>
-            <Text>Next</Text>
+
+
+            <Button iconRight style={[styles.grey, {alignSelf: 'center'}]}>
+              <Text>Complete</Text>
+              <Icon name='log-in' />
             </Button>
           </View>
         </Content>
+        <Modal isVisible={this.state.isModalVisible} animationIn='fadeInLeft' animationOut='fadeOutRight'>
+          <Content style={{backgroundColor: 'white'}}>
+            <Button onPress={this._toggleModal} iconLeft style={[{alignSelf: 'flex-end', backgroundColor: 'white'}]}>
+              <Icon name='trash' style={{color: 'red', fontSize: 30, marginRight:5}}/>
+            </Button>
+            <View style={{ flex: 1 }}>
+                <Form style={[{minHeight: 300, justifyContent: 'space-around'}]}>
+                  <View>
+                    <Item stackedLabel>
+                      <Label>Name</Label>
+                      <Input />
+                    </Item>
+                  </View>
+                  <View>
+                    <Item stackedLabel>
+                      <Label>Name of School</Label>
+                      <Input />
+                    </Item>
+                  </View>
+                  <View>
+                    <Item stackedLabel>
+                      <Label>Bus Number</Label>
+                      <Input
+                        value={this.state.phoneNumber}
+                        keyboardType="number-pad"
+                        onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+                      />
+                    </Item>
+                  </View>
+                </Form>
+              </View>
+              <Button onPress={this._toggleModal} iconLeft style={[styles.grey, {alignSelf: 'center'}]}>
+                <Icon name='done-all' />
+                <Text>Finish</Text>
+              </Button>
+          </Content>
+        </Modal>
       </Container>
     );
   }
 }
-
-/*
-<Container >
-<Content contentContainerStyle={{flex: 1}}>
-<Form >
-
-</Form>
-
-</Content>
-</Container>
-*/
