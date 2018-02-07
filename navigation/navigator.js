@@ -1,14 +1,17 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
-import NameScreen from '../components/SignUpParent.js';
-import ChildScreen from '../components/Child.js';
-
+import { StackNavigator } from 'react-navigation'
+import SignUpDriver from '../components/SignUpDriver.js'
+import SignUpParent from '../components/SignUpParent.js'
+import ChildScreen from '../components/Child.js'
+import ConfirmCode from '../components/confirmCode.js'
+import SignUp from '../components/SignUp.js'
 const RootStackNavigator = StackNavigator(
   {
-    // Child: { screen: ChildScreen }
-    Name: { screen: NameScreen },
-        // Number: {screen: NumberScreen }
+    // SignUp: { screen: SignUp }
+    // SignUpParent: { screen: SignUpParent },
+    // SignUpDriver: { screen: SignUpDriver },
+    ConfirmCode: { screen: ConfirmCode },
   },
   {
    navigationOptions: () => ({
@@ -21,10 +24,10 @@ const RootStackNavigator = StackNavigator(
 
 export default class RootNavigator extends React.Component {
   componentWillMount(){
-    console.log('navigator mounting 1')
+    console.log('navigator will mount')
   }
   componentDidMount() {
-    console.log('navigator mounting: ', this.props)
+    console.log('navigator did mount ', this.props)
   }
 
   render() {

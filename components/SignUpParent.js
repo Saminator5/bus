@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {StyleSheet, View, TouchableOpacity, TextInput, Dimensions} from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Thumbnail, Icon } from 'native-base';
 import styles from '../styles.js';
-import PhonePad from './PhonePad';
 const {height, width} = Dimensions.get('window');
 import Modal from 'react-native-modal'
+import SendSMS from 'react-native-sms'
+import Communications from 'react-native-communications';
 
-export default class SignUpName extends React.Component {
+export default class SignUpParent extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -16,11 +17,25 @@ export default class SignUpName extends React.Component {
     this.state = {
       phoneNumber: '',
       isModalVisible: false,
-      busNumber: ''
+      busNumber: '',
+      name: '',
+      email: ''
     }
   }
 
   _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible })
+
+  _finish = async () => {
+    console.log('user props: ', this.props);
+    try {
+      const response = await fetch(`https://ancient-shelf-39200.herokuapp.com/messages/send/${this.state.phoneNumber}`, {
+        method: 'GET',
+      });
+      console.log('response: ', response)
+    } catch(e){
+      console.log('error: ', e)
+    }
+  }
 
   render() {
     return (
@@ -37,13 +52,13 @@ export default class SignUpName extends React.Component {
                 <View>
                   <Item stackedLabel>
                     <Label>Name</Label>
-                    <Input />
+                    <Input onChangeText={(name) => this.setState({name})} />
                   </Item>
                 </View>
                 <View>
                   <Item stackedLabel>
                     <Label>Email</Label>
-                    <Input />
+                    <Input onChangeText={(email) => this.setState({email})} />
                   </Item>
                 </View>
                 <View>
@@ -101,9 +116,11 @@ export default class SignUpName extends React.Component {
             </Button>
           </Content>
         </Modal>
+
         <Button full warning>
-          <Text style={{fontSize: 20}}>Finish</Text>
+          <Text onPress={this._finish} style={{fontSize: 20}}>Finish</Text>
         </Button>
+
       </Container>
     );
   }

@@ -7,6 +7,9 @@ export default styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center'
   },
+  height: {
+    height: height
+  },
   button: {
     width: 70
   },
